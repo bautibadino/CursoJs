@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', llenarOpciones())
 
 
 // VAMOS A USAR UN IF PARA VERIFICAR QUE TODOS LOS CAMPOS SEAN LLENOS Y QUE NO HAYA UN STRING VACIO.
+
+//EL USUARIO SE VA A VERIFICAR UNA VEZ QUE ESTE DE CLICK EN EL SUBMIT,
 eventListeners()
 function eventListeners (){
     const formulario = document.querySelector('#cotizador')
