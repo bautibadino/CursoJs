@@ -25,7 +25,7 @@
         <form action="#" id="cotizador">
           <select id="marca">
             <optgroup label="Marcas mas buscadas">
-              <option value=""></option>
+              <option value="">Selecciona tu marca</option>
               <option value="1">Audi</option>
               <option value="2">Bmw</option>
               <option value="3">Volkswagen</option>
@@ -47,11 +47,22 @@
             </optgroup>
           </select>
           <select name="" id="year">
-            <option value=""></option>
+            <option value="">Selecciona el año de tu vehiculo</option>
+          </select>
+
+          <select name="" id="tipo-seguro">
+            <option value="">Selecciona el tipo de seguro</option>
+            <option value="1">Seguro contra terceros</option>
+            <option value="2">Seguro contra terceros, robo e incendio</option>
+            <option value="3">Seguro contra todo riesgo</option>
           </select>
 
           <button id="submit" type="submit">Enviar</button>
+          <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+          </svg>
         </form>
+
       </div>
     </div>
   </main>
