@@ -40,7 +40,7 @@ function autenticarOpciones(e) {
 }
 
 //NOMBRE EN DOM//
-let ingresoNombre = prompt('Ingrese su nombre');
+// let ingresoNombre = prompt('Ingrese su nombre');
 
 function nombreEnDom(e) {
     const contenedor = document.querySelector('.contenedor-cotizador') // nodo padre

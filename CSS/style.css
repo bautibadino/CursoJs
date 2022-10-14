@@ -1,130 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Noto Sans Mono', monospace;
+    font-family: 'Roboto', sans-serif;
 }
 
 header {
     width: 100%;
-    height: 100px;
+    height: 60px;
     text-align: center;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    box-shadow: 0px 5px 5px -1px rgba(0,0,0,0.35);
+    -webkit-box-shadow: 0px 5px 5px -1px rgba(0,0,0,0.35);
+    -moz-box-shadow: 0px 5px 5px -1px rgba(0,0,0,0.35);
+    font-size: 18px;
+    font-weight: 300;
+    color: rgb(39, 39, 84);
 }
 
-header .linea-superior {
-    background-color: rgb(200, 197, 197);
-    width: 100%;
-    height: 50px;
+main{
+    display: flex;
+    flex-direction: column;
+}
+main .banner-bienvenida{
+    height: 50vh;
+    width: 100vw;
+    overflow: hidden;
     display: flex;
     align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    padding: 0px 10px 0px 10px;
-    font-size: .7em;
-    font-weight: 100;
-    color: white;
-    border-bottom: 1px solid whitesmoke;
+    border-bottom: .5px solid rgba(128, 128, 128, 0.167) ;
+    background-color: rgba(250, 235, 215, 0.385);
 }
 
-header .linea-inferior {
-    background-color: rgb(17, 15, 56);
-    color: white;
-    height: 50px;
-    width: 100%;
+
+
+.banner-bienvenida img{
+    width: 60vw;
+    height: 50vh;
+    object-fit: cover;
+    position: absolute;
+    right: 0px;
+    border-radius: 5px 0px 0px 0px;
+    filter: opacity(80%);
+    box-shadow: -4px 4px 5px -1px rgba(0,0,0,0.29);
+    -webkit-box-shadow: -4px 4px 5px -1px rgba(0,0,0,0.29);
+    -moz-box-shadow: -4px 4px 5px -1px rgba(0,0,0,0.29);
+}
+
+.banner-bienvenida .contenedor-textos{
+    width: 30vw;
     display: flex;
     justify-content: center;
-    align-items: center;
-    font-size: .8em;
-    letter-spacing: 2px;
-}
-
-main div {
-    display: flex;
-    align-items: center;
-}
-
-.contenedor-cotizador {
-    width: 100%;
-    height: 60vh;
-    display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    height: 35vh;
+    font-size: 24px;
+    color: rgb(39, 39, 84);
+    border-bottom: .5px solid #bbbff153;
+    border-top: .5px solid #bbbff153;;
 }
 
-.contenedor-cotizador h2 {
-    border-bottom: 1px solid rgb(200, 197, 197);
-    ;
+.contenedor-textos button{
+    width: 20%;
+    height: 15%;
+    margin-top: 50px;
+    background-color: #bbbff153;
+    box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
+    -6px -6px 10px -1px (255, 255, 255, 0.4);
+    border: .5px solid rgba(0, 0, 0, 0.056);
+    cursor: pointer;
+    border-radius: 4px;
 }
 
-#cotizador {
-    width: 50%;
-    height: 300px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
+.contenedor-textos button:active{
+
+    box-shadow: 6px 6px 10px -1px rgba(255, 255, 255, 0.7),
+    -6px -6px 10px -1px rgba(0, 0, 0, 0.15);
+    
 }
-
-#cotizador select {
-    text-align: center;
-    height: 40px;
-    width: 250px;
-    background: rgb(17, 15, 56);
-    color: white;
-}
-
-button {
-    height: 45px;
-    width: 130px;
-}
-
-/* Spinner comienzo */
-
-.spinner {
-    animation: rotate 2s linear infinite;
-    z-index: 2;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -25px 0 0 -25px;
-    width: 50px;
-    height: 50px;
-    visibility: hidden;
-}
-
-
-.path {
-    stroke: hsl(210, 70, 75);
-    stroke-linecap: round;
-    animation: dash 1.5s ease-in-out infinite;
-}
-
-
-@keyframes rotate {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes dash {
-    0% {
-        stroke-dasharray: 1, 150;
-        stroke-dashoffset: 0;
-    }
-
-    50% {
-        stroke-dasharray: 90, 150;
-        stroke-dashoffset: -35;
-    }
-
-    100% {
-        stroke-dasharray: 90, 150;
-        stroke-dashoffset: -124;
-    }
-}
-
-/* Spinner fin */
