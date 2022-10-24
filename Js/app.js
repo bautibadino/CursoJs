@@ -31,7 +31,7 @@ UI.prototype.llenarOpciones = () => {
 }
 
 const ui = new UI();
-    console.log(presupuesto)
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -212,9 +212,16 @@ function crearAlerta(mensaje, tipo) {
         divAlerta.classList.add('divAlerta-error')
     } else if (tipo === 'correcto') {
         divAlerta.classList.add('divAlerta-success')
+        
 
         //UNA VEZ QUE SE PASA LA VERIFICACION PASAMOS A ARMAR EL PRESUPUESTO
         setTimeout(() => {
+            
+            //removemos la alerta de cotizando...
+            divAlerta.remove()
+            parrafoAlerta.remove()
+
+            //creamos el objeto para dar el presupuesto
             const divPresupuesto = document.createElement('div')
             divPresupuesto.innerHTML = `
             <h3>TU PRESUPUESTO </h3>
@@ -229,11 +236,13 @@ function crearAlerta(mensaje, tipo) {
     }
 
 
-    setTimeout(() => {
-        divAlerta.remove()
-        parrafoAlerta.remove()
-    }, 4000);
 
 
+}
 
+const presupuesto = {
+    marca: `${marca}`,
+    modelo: `${selectYear.value}`,
+    tipoPoliza: `${tipoPoliza}`,
+    Total: `${precio}`
 }
