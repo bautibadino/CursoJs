@@ -8,13 +8,16 @@ const tipoSeguro = document.querySelector('#tipo-seguro');
 const contenedorForm = document.querySelector('#cotizador');
 
 
+let precio;
+const base = 5000;
+let marca;
+let tipoPoliza;
+let presupuesto;
+let presupuestos = [];
 // constructores de seguro
-
-
-
 function UI() {
-
 }
+
 // VAMOS A ITERAR CON UN FOR SOBRE 20 AÑOS, SIENDO QUE EL MAXIMO ES LA FECHA ACTUAL Y EL MINIMO ES 20 PARA ATRAS.
 
 UI.prototype.llenarOpciones = () => {
@@ -32,20 +35,20 @@ UI.prototype.llenarOpciones = () => {
 
 const ui = new UI();
 
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    ui.llenarOpciones();
-})
-
-
-
 //EL USUARIO SE VA A VERIFICAR UNA VEZ QUE ESTE DE CLICK EN EL SUBMIT,
 eventListeners()
 function eventListeners() {
     const formulario = document.querySelector('#cotizador')
     formulario.addEventListener('submit', verificar)
     formulario.addEventListener('submit', cotizacionSeguro)
+    formulario.addEventListener('submit', guardarStorage)
+    document.addEventListener('DOMContentLoaded', () => {
+        ui.llenarOpciones();
+
+        presupuestos = JSON.stringify(localStorage.getItem('presupuesto'))
+
+
+    })
 }
 
 // VAMOS A USAR UN IF PARA VERIFICAR QUE TODOS LOS CAMPOS SEAN LLENOS Y QUE NO HAYA UN STRING VACIO.
@@ -57,8 +60,6 @@ function verificar(e) {
         crearAlerta('Debes completar todos los campos', 'error');
     } else {
         crearAlerta('Tu cotizacion esta siendo procesada...', 'correcto');
-
-        console.log(selectModel, selectYear.value, tipoSeguro.value)
     }
 
 
@@ -66,10 +67,7 @@ function verificar(e) {
 }
 
 
-let precio;
-const base = 5000;
-let marca;
-let tipoPoliza;
+
 
 function cotizacionSeguro(e) {
 
@@ -192,11 +190,23 @@ function cotizacionSeguro(e) {
 
     // PARA FINALIZAR VAMOS A PLASMAR EL CONTENIDO EN EL HTML
 
+}
+
+function guardarStorage(e) {
+    
+    presupuestoObj = {
+        marca: `${marca}`,
+        modelo: `${selectYear.value}`,
+        tipo: `${tipoPoliza}`,
+        total: `${precio}`
+    }
+
+    localStorage.setItem('presupuesto', JSON.stringify(presupuestoObj))
 
 }
 
-
 function crearAlerta(mensaje, tipo) {
+
 
     //ALERTA PASASTE DE VERIF O NO
     const divAlerta = document.createElement('div');
@@ -212,37 +222,37 @@ function crearAlerta(mensaje, tipo) {
         divAlerta.classList.add('divAlerta-error')
     } else if (tipo === 'correcto') {
         divAlerta.classList.add('divAlerta-success')
-        
 
         //UNA VEZ QUE SE PASA LA VERIFICACION PASAMOS A ARMAR EL PRESUPUESTO
         setTimeout(() => {
-            
             //removemos la alerta de cotizando...
             divAlerta.remove()
             parrafoAlerta.remove()
-
             //creamos el objeto para dar el presupuesto
-            const divPresupuesto = document.createElement('div')
-            divPresupuesto.innerHTML = `
-            <h3>TU PRESUPUESTO </h3>
-            <p><span>Marca:</span> ${marca}</p>
-            <p><span>Modelo:</span> ${selectYear.value}</p>
-            <p><span>Tipo de seguro:</span> ${tipoPoliza}</p>
-            <p><span>Total:</span> ${precio}</p>
-            `
-            contenedorForm.appendChild(divPresupuesto);
-            divPresupuesto.classList.add('presupuesto')
+            crearHTML()
         }, 4000);
     }
 
 
 
-
 }
 
-const presupuesto = {
-    marca: `${marca}`,
-    modelo: `${selectYear.value}`,
-    tipoPoliza: `${tipoPoliza}`,
-    Total: `${precio}`
+
+
+function crearHTML() {
+    
+    const divPresupuesto = document.createElement('div')
+    
+    divPresupuesto.innerHTML = `
+    <h3>TU PRESUPUESTO </h3>
+    <p><span>Marca:</span> ${presupuestoObj.marca}</p>
+    <p><span>Modelo:</span> ${presupuestoObj.modelo}</p>
+    <p><span>Tipo de seguro:</span> ${presupuestoObj.tipo}</p>
+    <p><span>Total:</span> ${presupuestoObj.total}</p>
+    `
+
+    contenedorForm.appendChild(divPresupuesto);
+    divPresupuesto.classList.add('presupuesto');
+
+
 }
