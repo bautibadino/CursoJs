@@ -12,8 +12,10 @@ let precio;
 const base = 5000;
 let marca;
 let tipoPoliza;
-let presupuesto;
 let presupuestos = [];
+const nuevoArray =[]
+
+
 // constructores de seguro
 function UI() {
 }
@@ -45,9 +47,33 @@ function eventListeners() {
     document.addEventListener('DOMContentLoaded', () => {
         ui.llenarOpciones();
 
-        presupuestos = JSON.stringify(localStorage.getItem('presupuesto'))
 
+        presupuestoObj = {
+            marca: `${marca}`,
+            modelo: `${selectYear.value}`,
+            tipo: `${tipoPoliza}`,
+            total: `${precio}`,
+            id: Date.now()
+        }
+        presupuestos = JSON.parse(localStorage.getItem('presupuestos')) || [];
 
+        if(presupuestos.length > 0){
+            presupuestos.forEach(element => {
+                const divPresupuesto = document.createElement('div')
+    
+        divPresupuesto.innerHTML = `
+        <h3>TU PRESUPUESTO ANTERIOR</h3>
+        <p><span>Marca:</span> ${element.marca}</p>
+        <p><span>Modelo:</span> ${element.modelo}</p>
+        <p><span>Tipo de seguro:</span> ${element.tipo}</p>
+        <p><span>Total:</span> ${element.total}</p>
+        `
+    
+        contenedorForm.appendChild(divPresupuesto);
+        divPresupuesto.classList.add('presupuesto');
+
+            });
+        }
     })
 }
 
@@ -161,7 +187,6 @@ function cotizacionSeguro(e) {
 
     precio -= ((diferencia * 2) * precio / 100);
 
-    console.log(precio)
 
     //POR ULTIMO, VAMOS A MULTIPLICAR EL PRECIO DEL SEGURO:
     //SI ES VALOR 1 (TERCEROS) = *1
@@ -188,8 +213,6 @@ function cotizacionSeguro(e) {
             break;
     }
 
-    // PARA FINALIZAR VAMOS A PLASMAR EL CONTENIDO EN EL HTML
-
 }
 
 function guardarStorage(e) {
@@ -198,12 +221,17 @@ function guardarStorage(e) {
         marca: `${marca}`,
         modelo: `${selectYear.value}`,
         tipo: `${tipoPoliza}`,
-        total: `${precio}`
+        total: `${precio}`,
+        id: Date.now()
     }
 
-    localStorage.setItem('presupuesto', JSON.stringify(presupuestoObj))
+
+    nuevoArray.unshift(presupuestoObj);
+    localStorage.setItem('presupuestos', JSON.stringify(nuevoArray)); 
 
 }
+
+
 
 function crearAlerta(mensaje, tipo) {
 
@@ -220,7 +248,10 @@ function crearAlerta(mensaje, tipo) {
 
     if (tipo === 'error') {
         divAlerta.classList.add('divAlerta-error')
-    } else if (tipo === 'correcto') {
+        setTimeout(() => {
+            divAlerta.remove()
+        }, 4000);
+    } else{
         divAlerta.classList.add('divAlerta-success')
 
         //UNA VEZ QUE SE PASA LA VERIFICACION PASAMOS A ARMAR EL PRESUPUESTO
@@ -241,18 +272,20 @@ function crearAlerta(mensaje, tipo) {
 
 function crearHTML() {
     
-    const divPresupuesto = document.createElement('div')
+
+
+        const divPresupuesto = document.createElement('div')
     
-    divPresupuesto.innerHTML = `
-    <h3>TU PRESUPUESTO </h3>
-    <p><span>Marca:</span> ${presupuestoObj.marca}</p>
-    <p><span>Modelo:</span> ${presupuestoObj.modelo}</p>
-    <p><span>Tipo de seguro:</span> ${presupuestoObj.tipo}</p>
-    <p><span>Total:</span> ${presupuestoObj.total}</p>
-    `
+        divPresupuesto.innerHTML = `
+        <h3>TU PRESUPUESTO </h3>
+        <p><span>Marca:</span> ${presupuestoObj.marca}</p>
+        <p><span>Modelo:</span> ${presupuestoObj.modelo}</p>
+        <p><span>Tipo de seguro:</span> ${presupuestoObj.tipo}</p>
+        <p><span>Total:</span> ${presupuestoObj.total}</p>
+        `
+    
+        contenedorForm.appendChild(divPresupuesto);
+        divPresupuesto.classList.add('presupuesto');
 
-    contenedorForm.appendChild(divPresupuesto);
-    divPresupuesto.classList.add('presupuesto');
-
-
-}
+        contenedorForm.reset()
+    }
