@@ -24,8 +24,7 @@ main{
     width: 100vw;
     align-items: center;
     justify-content: center;    
-    background-color: rgba(128, 128, 128, 0.422);
-
+    background-color: rgb(0, 0, 0);
 }
 
 
@@ -74,14 +73,6 @@ main{
 
 }
 
-
-
-
-
-
-
-
-
 .landing-page .blobs .blob-2{
     position: absolute;
     right: -500px;
@@ -114,16 +105,21 @@ main{
 
 .contenedor-textos button:active{
 
-    box-shadow: 6px 6px 10px -1px rgba(229, 229, 222, 0.79),
-    -6px -3px 10px -1px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: inset 10px 10px 35px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 10px 10px 35px 0px rgba(0,0,0,0.75);
+    box-shadow: inset 10px 10px 35px 0px rgba(0,0,0,0.75);
     
 }
 
 .contenedor-cotizador{
-    min-height: 80vh;
+    min-height: 100vh;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    background-color: white;
+    flex-direction: row;
+
 }
 
 form{
@@ -131,14 +127,14 @@ form{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 50vw;
-    min-height: 60vh;
+    width: calc(50vw - 20px);
+    height: calc(100vh - 40px);
     box-shadow: 0px 0px 26px 5px rgba(0,0,0,0.64);
     -webkit-box-shadow: 0px 0px 26px 5px rgba(0,0,0,0.64);
     -moz-box-shadow: 0px 0px 26px 5px rgba(0,0,0,0.64);
     background: rgba(219, 219, 219, 0.697);
     border-radius: 10px 40px;
-    margin-bottom: 20px;
+    margin: 20px 10px;
 }
 
 form select{
@@ -156,6 +152,23 @@ form select{
     border: .5px solid rgba(0, 0, 0, 0.506);
 }
 
+form .name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20vw;
+    height: 50px;
+    text-align: center;
+    margin: 20px 0px;
+    background-color: rgba(128, 128, 128, 0.444);
+    color: white;
+    border-radius: 4px;
+    border: .5px solid rgba(0, 0, 0, 0.506);
+}
+
+.name::placeholder{
+    color: white;
+}
 #submit{
     margin-top: 15px;
     width: 20vw;
@@ -184,7 +197,6 @@ form select{
     color: white;
     background-color: rgba(223, 99, 99, 0.806);
     border-radius: 5px;
-
 }
 
 .divAlerta-success{
@@ -202,6 +214,13 @@ form select{
     border-radius: 5px;
 }
 
+.traslado-alerta{
+    transform: translateX(-200%);
+    -webkit-transition: all .4s ease-in-out;
+    -moz-transition: all .4s  ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    transition: all .4s  ease-in-out;
+}
 .presupuesto{
     width: 40vw;
     height: auto;
@@ -231,3 +250,31 @@ form select{
     font-weight: bolder;
     
 }
+
+.contenedor-cotizaciones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.contenedor-cotizaciones h3{
+    text-align: center;
+    font-size: 24px;
+    font-weight: 300;
+    margin-top: 25px;
+    height: 50px;
+}
+
+.lista-cotizaciones{
+    display: flex;
+    flex-direction: column-reverse;
+    width: 50vw;
+    /* height: 100vh; */
+    align-items: center;
+    justify-content: start;
+}
+.lista-cotizaciones li {
+    list-style-type: none;
+}
+

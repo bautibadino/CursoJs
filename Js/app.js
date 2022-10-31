@@ -5,6 +5,7 @@ const selectYear = document.querySelector('#year');
 const submitButton = document.querySelector('#submit');
 const selectModel = document.querySelector('#marca');
 const tipoSeguro = document.querySelector('#tipo-seguro');
+const nombreSeguro = document.querySelector('#name')
 const contenedorForm = document.querySelector('#cotizador');
 
 
@@ -64,8 +65,9 @@ function verificar(e) {
 
     if (!alerta) {
 
-        if (selectModel.value === '' || selectYear.value === '' || tipoSeguro.value === '') {
+        if (selectModel.value === '' || selectYear.value === '' || tipoSeguro.value === '' || nombreSeguro.value === '') {
             crearAlerta('Debes completar todos los campos', 'error');
+
         } else {
             crearAlerta('Tu cotizacion esta siendo procesada...', 'correcto');
         }
@@ -74,24 +76,26 @@ function verificar(e) {
 }
 
 function cotizacionesAnteriores(e) {
+    const listaPresupuestos = document.querySelector('.lista-cotizaciones')
 
     presupuestos = JSON.parse(localStorage.getItem('presupuestos')) || [];
 
     if (presupuestos.length > 0) {
         presupuestos.forEach(element => {
-            const divPresupuesto = document.createElement('div')
+            const liPresupuesto = document.createElement('li')
 
-            divPresupuesto.innerHTML = `
+            liPresupuesto.innerHTML = `
+
     <h3>TU PRESUPUESTO ANTERIOR</h3>
     <p><span>Marca:</span> ${element.marca}</p>
     <p><span>Modelo:</span> ${element.modelo}</p>
     <p><span>Tipo de seguro:</span> ${element.tipo}</p>
     <p><span>Total:</span> ${element.total}</p>
+
     `
 
-            contenedorForm.appendChild(divPresupuesto);
-            divPresupuesto.classList.add('presupuesto');
-
+            listaPresupuestos.appendChild(liPresupuesto);
+            liPresupuesto.classList.add('presupuesto');
         });
     }
 }
@@ -219,7 +223,7 @@ function cotizacionSeguro(e) {
             break;
     }
 
-    if(marca === undefined || tipoPoliza === undefined || precio === undefined){
+    if(marca === undefined || tipoPoliza === undefined || precio === undefined || nombreSeguro.value === ''){
 
     }
     else{
@@ -234,6 +238,7 @@ function cotizacionSeguro(e) {
 function guardarStorage() {
 
     presupuestoObj = {
+        nombre: `${nombreSeguro.value}`,
         marca: `${marca}`,
         modelo: `${selectYear.value}`,
         tipo: `${tipoPoliza}`,
@@ -244,7 +249,7 @@ function guardarStorage() {
 
     nuevoArray.push(presupuestoObj);
     localStorage.setItem('presupuestos', JSON.stringify(nuevoArray));
-
+    console.log(nuevoArray);
 }
 
 
@@ -265,19 +270,25 @@ function crearAlerta(mensaje, tipo) {
     if (tipo === 'error') {
         divAlerta.classList.add('divAlerta-error')
         setTimeout(() => {
-            divAlerta.remove()
+        divAlerta.classList.add('traslado-alerta')
+        
+            setTimeout(() => {
+                divAlerta.remove()
+            }, 1000);
         }, 4000);
+
     } else {
         divAlerta.classList.add('divAlerta-success')
 
         //UNA VEZ QUE SE PASA LA VERIFICACION PASAMOS A ARMAR EL PRESUPUESTO
         setTimeout(() => {
-            //removemos la alerta de cotizando...
-            divAlerta.remove()
-            parrafoAlerta.remove()
-            //creamos el objeto para dar el presupuesto
-            crearHTML()
-        }, 4000);
+            divAlerta.classList.add('traslado-alerta')
+            
+                setTimeout(() => {
+                    divAlerta.remove()
+                    parrafoAlerta.remove()
+                }, 1000);
+            }, 4000);
     }
 
 
@@ -289,19 +300,19 @@ function crearAlerta(mensaje, tipo) {
 function crearHTML() {
 
 
+    const listaPresupuestos = document.querySelector('.lista-cotizaciones')
+    const liPresupuesto = document.createElement('li')
 
-    const divPresupuesto = document.createElement('div')
-
-    divPresupuesto.innerHTML = `
-        <h3>TU PRESUPUESTO </h3>
-        <p><span>Marca:</span> ${presupuestoObj.marca}</p>
-        <p><span>Modelo:</span> ${presupuestoObj.modelo}</p>
-        <p><span>Tipo de seguro:</span> ${presupuestoObj.tipo}</p>
-        <p><span>Total:</span> ${presupuestoObj.total}</p>
+    liPresupuesto.innerHTML = `
+    <h3>TU PRESUPUESTO </h3>
+    <p><span>Marca:</span> ${presupuestoObj.marca}</p>
+    <p><span>Modelo:</span> ${presupuestoObj.modelo}</p>
+    <p><span>Tipo de seguro:</span> ${presupuestoObj.tipo}</p>
+    <p><span>Total:</span> ${presupuestoObj.total}</p>
         `
 
-    contenedorForm.appendChild(divPresupuesto);
-    divPresupuesto.classList.add('presupuesto');
-
+    listaPresupuestos.appendChild(liPresupuesto);
+    liPresupuesto.classList.add('presupuesto');
+    
     contenedorForm.reset()
 }   
