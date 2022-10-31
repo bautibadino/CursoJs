@@ -24,7 +24,6 @@ function eventListeners() {
     const formulario = document.querySelector('#cotizador')
     formulario.addEventListener('submit', verificar)
     formulario.addEventListener('submit', cotizacionSeguro)
-    // formulario.addEventListener('submit', guardarStorage)
     document.addEventListener('DOMContentLoaded', () => {
 
         cotizacionesAnteriores()
@@ -76,7 +75,7 @@ function verificar(e) {
 }
 
 function cotizacionesAnteriores(e) {
-    const listaPresupuestos = document.querySelector('.lista-cotizaciones')
+    const listaPresupuestos = document.querySelector('.lista-cotizaciones-anteriores')
 
     presupuestos = JSON.parse(localStorage.getItem('presupuestos')) || [];
 
@@ -87,6 +86,7 @@ function cotizacionesAnteriores(e) {
             liPresupuesto.innerHTML = `
 
     <h3>TU PRESUPUESTO ANTERIOR</h3>
+    <p><span>Nombre del cliente:</span> ${element.nombre}</p>
     <p><span>Marca:</span> ${element.marca}</p>
     <p><span>Modelo:</span> ${element.modelo}</p>
     <p><span>Tipo de seguro:</span> ${element.tipo}</p>
@@ -288,6 +288,7 @@ function crearAlerta(mensaje, tipo) {
                     divAlerta.remove()
                     parrafoAlerta.remove()
                 }, 1000);
+                crearHTML()
             }, 4000);
     }
 
@@ -300,19 +301,22 @@ function crearAlerta(mensaje, tipo) {
 function crearHTML() {
 
 
-    const listaPresupuestos = document.querySelector('.lista-cotizaciones')
+    const presupuestoActual = document.querySelector('.cotizacion-actual')
     const liPresupuesto = document.createElement('li')
 
     liPresupuesto.innerHTML = `
     <h3>TU PRESUPUESTO </h3>
+<p><span>Nombre del cliente:</span> ${presupuestoObj.nombre}</p>
     <p><span>Marca:</span> ${presupuestoObj.marca}</p>
     <p><span>Modelo:</span> ${presupuestoObj.modelo}</p>
     <p><span>Tipo de seguro:</span> ${presupuestoObj.tipo}</p>
     <p><span>Total:</span> ${presupuestoObj.total}</p>
         `
 
-    listaPresupuestos.appendChild(liPresupuesto);
+    presupuestoActual.appendChild(liPresupuesto);
     liPresupuesto.classList.add('presupuesto');
     
     contenedorForm.reset()
 }   
+
+

@@ -222,33 +222,31 @@ form .name {
     transition: all .4s  ease-in-out;
 }
 .presupuesto{
-    width: 40vw;
-    height: auto;
+
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
-    font-weight: 300;
-    font-size: 18px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 2px solid rgba(255, 255, 0, 0.542);
+    width: 25vw;
+    height: auto;
+    border: 1px solid;
 
 }
 
 .presupuesto h3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    height: 35px;
-    background-color: rgba(255, 255, 0, 0.542);
+    background-color: rgba(135, 135, 135, 0.096);
     width: 100%;
 }
 
 .presupuesto p{
-    margin: 3px;
+    margin: 5px;
 }
 .presupuesto p span {
     font-weight: bolder;
-    
 }
 
 .contenedor-cotizaciones {
@@ -266,15 +264,16 @@ form .name {
     height: 50px;
 }
 
-.lista-cotizaciones{
+.lista-cotizaciones-anteriores{
     display: flex;
     flex-direction: column-reverse;
     width: 50vw;
     /* height: 100vh; */
     align-items: center;
     justify-content: start;
+    margin-top: 30px;
 }
-.lista-cotizaciones li {
+.lista-cotizaciones-anteriores li {
     list-style-type: none;
 }
 
