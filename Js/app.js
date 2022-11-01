@@ -7,6 +7,7 @@ const selectModel = document.querySelector('#marca');
 const tipoSeguro = document.querySelector('#tipo-seguro');
 const nombreSeguro = document.querySelector('#name')
 const contenedorForm = document.querySelector('#cotizador');
+const boton = document.querySelector('.textos a')
 
 
 let precio;
@@ -30,6 +31,8 @@ function eventListeners() {
         ui.llenarOpciones();
 
     })
+
+    boton.addEventListener('click', trasladarSeccion)
 }
 // constructores de seguro
 function UI() {
@@ -223,7 +226,7 @@ function cotizacionSeguro(e) {
             break;
     }
 
-    if(marca === undefined || tipoPoliza === undefined || precio === undefined || nombreSeguro.value === ''){
+    if(marca === undefined || tipoPoliza === undefined || precio === undefined || nombreSeguro.value === '' || nombreSeguro.value === Number ){
 
     }
     else{
@@ -279,16 +282,21 @@ function crearAlerta(mensaje, tipo) {
 
     } else {
         divAlerta.classList.add('divAlerta-success')
-
+        const spinner = document.querySelector('.lds-roller')
+        spinner.style.visibility = 'visible';
         //UNA VEZ QUE SE PASA LA VERIFICACION PASAMOS A ARMAR EL PRESUPUESTO
+        
         setTimeout(() => {
             divAlerta.classList.add('traslado-alerta')
-            
+
                 setTimeout(() => {
                     divAlerta.remove()
                     parrafoAlerta.remove()
+
+
                 }, 1000);
                 crearHTML()
+                spinner.style.visibility = 'hidden';
             }, 4000);
     }
 
@@ -320,3 +328,15 @@ function crearHTML() {
 }   
 
 
+function trasladarSeccion (e){
+    e.preventDefault()
+
+    const href = this.getAttribute("href");
+    
+    const offsetTop = document.querySelector(href).offsetTop;
+
+    scroll({
+        top: offsetTop,
+        behavior: "smooth"
+    })
+}
