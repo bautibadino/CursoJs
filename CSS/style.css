@@ -26,6 +26,7 @@ main {
     align-items: center;
     justify-content: center;
     /* background-color: rgb(0, 0, 0); */
+    
 }
 
 video{
@@ -35,9 +36,11 @@ video{
     filter: blur(20px);
     z-index: -1;
     object-fit: cover;
+
 }
 
 .landing-page {
+    
     display: flex;
     width: 100vw;
     height: 100vh;
@@ -45,6 +48,10 @@ video{
     align-items: center;
     overflow: hidden;
     position: relative;
+    -webkit-box-shadow: 0px 10px 14px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 10px 14px -3px rgba(0,0,0,0.75);
+    box-shadow: 0px 10px 14px -3px rgba(0,0,0,0.75);
+
 }
 
 
@@ -270,6 +277,8 @@ form .name {
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 .contenedor-cotizaciones h3 {
@@ -287,11 +296,29 @@ form .name {
     /* height: 100vh; */
     align-items: center;
     justify-content: start;
-    margin-top: 30px;
 }
 
 .lista-cotizaciones-anteriores li {
     list-style-type: none;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+
+.cruz{
+    background-color: rgba(255, 0, 0, 0.605);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 20px;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 2px 3px 4px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 2px 3px 4px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 3px 4px 0px rgba(0,0,0,0.75);
 }
 
 /* SPINNER */
@@ -418,22 +445,40 @@ form .name {
     .presupuesto {
         width: 40vw;
     }
+    #cotizador{
+        width: 50vw;
+    }
     #cotizador input{
-        width: 30vw;
+        width: 80%;
     }
     form select{
-        width: 30vw;
+        width: 80%;
     }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 800px) {
     .contenedor-cotizador{
         flex-direction: column;
     }
     #cotizador{
-        width: 90vw;
+        height: 80vh;
+        width: 100vw;
     }
     .presupuesto{
-        width: 70vw;
+        /* margin: 10px 0px; */
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .contenedor-cotizaciones{
+        width: 100vw;
+    }
+    #cotizador{
+        height: 80vh;
+        width: 80vw;
+    }
+    .lista-cotizaciones-anteriores{
+        width: 100vw;
     }
 }

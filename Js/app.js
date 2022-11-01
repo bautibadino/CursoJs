@@ -22,17 +22,22 @@ let presupuestoObj = {}
 //EVENTLISTENERS
 eventListeners()
 function eventListeners() {
+    // const botonCruz = document.querySelector('.cruz');
     const formulario = document.querySelector('#cotizador')
+    const botonCruz = document.getElementsByClassName('cruz')
     formulario.addEventListener('submit', verificar)
     formulario.addEventListener('submit', cotizacionSeguro)
-    document.addEventListener('DOMContentLoaded', () => {
+        // eliminar presupuestos
+    // botonCruz.addEventListener('click', eliminarPresupuesto);
 
+
+    document.addEventListener('DOMContentLoaded', () => {
         cotizacionesAnteriores()
         ui.llenarOpciones();
 
     })
 
-    boton.addEventListener('click', trasladarSeccion)
+    boton.addEventListener('click', trasladarSeccion);
 }
 // constructores de seguro
 function UI() {
@@ -96,10 +101,16 @@ function cotizacionesAnteriores(e) {
     <p><span>Total:</span> ${element.total}</p>
 
     `
-
+    const cruz = document.createElement('button')
+    cruz.innerText = 'X';
+    cruz.classList.add('cruz')
+    liPresupuesto.appendChild(cruz)
             listaPresupuestos.appendChild(liPresupuesto);
             liPresupuesto.classList.add('presupuesto');
-        });
+        })
+
+        
+
     }
 }
 
@@ -250,11 +261,10 @@ function guardarStorage() {
     }
 
 
-    nuevoArray.push(presupuestoObj);
-    localStorage.setItem('presupuestos', JSON.stringify(nuevoArray));
-    console.log(nuevoArray);
-}
+    presupuestos.push(presupuestoObj);
+    localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
 
+}
 
 
 function crearAlerta(mensaje, tipo) {
@@ -321,11 +331,19 @@ function crearHTML() {
     <p><span>Total:</span> ${presupuestoObj.total}</p>
         `
 
+        const cruz = document.createElement('button')
+        cruz.innerText = 'X';
+        cruz.classList.add('cruz')
+        liPresupuesto.append(cruz)
     presupuestoActual.appendChild(liPresupuesto);
     liPresupuesto.classList.add('presupuesto');
     
     contenedorForm.reset()
 }   
+
+    // eliminar presupuestos
+const botonCruz = document.querySelector('.cruz');
+
 
 
 function trasladarSeccion (e){
@@ -339,4 +357,10 @@ function trasladarSeccion (e){
         top: offsetTop,
         behavior: "smooth"
     })
+}
+
+function eliminarPresupuesto (e) {
+    e.preventDefault();
+    
+    console.log('desde eliminar')
 }
