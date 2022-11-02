@@ -14,7 +14,7 @@ let marca;
 let tipoPoliza;
 let presupuestos = [];
 const nuevoArray = []
-// let presupuestoObj = {}
+let presupuestoObj = {}
 
 
 //EVENTLISTENERS
