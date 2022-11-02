@@ -344,6 +344,10 @@ form .name {
     box-shadow: inset 0px -2px 45px 11px rgba(0,0,0,0.52);
 }
 
+.traslado-presupuesto{
+    transform: translateX(200%);
+    transition: all .5s ease-in;
+}
 /* SPINNER */
 /* SPINNER */
 /* SPINNER */

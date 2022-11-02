@@ -1,5 +1,3 @@
-
-
 // LETS AND CONST 
 const selectYear = document.querySelector('#year');
 const submitButton = document.querySelector('#submit');
@@ -10,35 +8,29 @@ const contenedorForm = document.querySelector('#cotizador');
 const boton = document.querySelector('.textos a')
 
 
-
 let precio;
 const base = 5000;
 let marca;
 let tipoPoliza;
 let presupuestos = [];
 const nuevoArray = []
-let presupuestoObj = {}
+// let presupuestoObj = {}
 
 
 //EVENTLISTENERS
 eventListeners()
 function eventListeners() {
 
-    // cruzBoton.addEventListener('click', eliminarPresupuesto);
     contenedorForm.addEventListener('submit', verificar)
     contenedorForm.addEventListener('submit', cotizacionSeguro)
-        // eliminar presupuestos
-
-
-
+    
     document.addEventListener('DOMContentLoaded', () => {
         cotizacionesAnteriores()
         ui.llenarOpciones();
-
     })
-
     boton.addEventListener('click', trasladarSeccion);
 }
+
 // constructores de seguro
 function UI() {
 }
@@ -61,30 +53,25 @@ UI.prototype.llenarOpciones = () => {
 const ui = new UI();
 
 //EL USUARIO SE VA A VERIFICAR UNA VEZ QUE ESTE DE CLICK EN EL SUBMIT,
-
-
 // VAMOS A USAR UN IF PARA VERIFICAR QUE TODOS LOS CAMPOS SEAN LLENOS Y QUE NO HAYA UN STRING VACIO.
 function verificar(e) {
     e.preventDefault();
 
-    //VERIFICAMOS QUE NO HAYA UNA ALERTA 
-    const alerta = document.querySelector('.divAlerta')
+    //VERIFICAMOS QUE NO HAYA UNA ALERTA ANTES, ASI NO TENEMOS REPETICION DE ESTA
+    const alerta = document.querySelector('.divAlerta');
 
     if (!alerta) {
-
         if (selectModel.value === '' || selectYear.value === '' || tipoSeguro.value === '' || nombreSeguro.value === '') {
             crearAlerta('Debes completar todos los campos', 'error');
-
         } else {
             crearAlerta('Tu cotizacion esta siendo procesada...', 'correcto');
         }
-
     }
 }
 
+//TRAEMOS COTIZACIONES ANTERIORES DEL LOCALSTORAGE AL CARGAR EL DOM,
 function cotizacionesAnteriores(e) {
     const listaPresupuestos = document.querySelector('.lista-cotizaciones-anteriores')
-
     presupuestos = JSON.parse(localStorage.getItem('presupuestos')) || [];
 
     if (presupuestos.length > 0) {
@@ -92,28 +79,36 @@ function cotizacionesAnteriores(e) {
             const liPresupuesto = document.createElement('li')
             //le pasamos el id al html
 
-
             liPresupuesto.innerHTML = `
-
     <h3>TU PRESUPUESTO ANTERIOR</h3>
     <p><span>Nombre del cliente:</span> ${element.nombre}</p>
     <p><span>Marca:</span> ${element.marca}</p>
     <p><span>Modelo:</span> ${element.modelo}</p>
     <p><span>Tipo de seguro:</span> ${element.tipo}</p>
     <p><span>Total:</span> ${element.total}</p>
-
     `
+
     const cruz = document.createElement('button')
     cruz.innerText = 'X';
     cruz.classList.add('cruz')
     liPresupuesto.appendChild(cruz)
-    cruz.addEventListener('click', eliminarPresupuestoViejo)
-    
     const idNuevo = element.id;
     cruz.setAttribute('id', idNuevo )
 
-            listaPresupuestos.appendChild(liPresupuesto);
-            liPresupuesto.classList.add('presupuesto');
+    listaPresupuestos.appendChild(liPresupuesto);
+    liPresupuesto.classList.add('presupuesto');
+
+    //BORRAR COTIZACIONES ANTERIORES
+    cruz.addEventListener('click', (e) =>{
+        liPresupuesto.classList.add('traslado-presupuesto')
+        setTimeout(() => {
+            listaPresupuestos.removeChild(liPresupuesto)
+            const presupuestoId = e.target.getAttribute('id');
+            presupuestos = presupuestos.filter(presup => presup.id !== parseInt(presupuestoId))
+            localStorage.setItem('presupuestos', JSON.stringify(presupuestos))    
+        }, 500);
+
+    })
         })
 
 
@@ -124,9 +119,10 @@ function cotizacionesAnteriores(e) {
 
 
 function cotizacionSeguro(e) {
+// USAREMOS UN SWITCH PARA ESTABLECER EL NOMBRE DE LA MARCA DE ACUERDO AL VALUE DEL HTML,
+// ADEMAS USAREMOS UN PRECIO BASE QUE DE ACUERDO A LA MARCA SE MULTIPLICARÁ.
 
     switch (selectModel.value) {
-
         case '1':
 
             precio = base * 2.5;
@@ -243,16 +239,14 @@ function cotizacionSeguro(e) {
             break;
     }
 
+    //ESTABLECEMOS QUE SOLO CUANDO SE VERFIQUE TODO SE GUARDE EN STOREGE
     if(marca === undefined || tipoPoliza === undefined || precio === undefined || nombreSeguro.value === '' || nombreSeguro.value === Number ){
-
     }
     else{
         guardarStorage()
     }
 
 }
-
-
 
 
 function guardarStorage() {
@@ -320,11 +314,8 @@ function crearAlerta(mensaje, tipo) {
 
 }
 
-
-
+//CREAR HTML CON PRESUPUESTOS GENERADOS EN ESTA SESION (ACTUALES)
 function crearHTML() {
-
-
     const presupuestoActual = document.querySelector('.cotizacion-actual')
     const liPresupuesto = document.createElement('li')
 
@@ -347,58 +338,31 @@ function crearHTML() {
 
         presupuestoActual.appendChild(liPresupuesto);
         liPresupuesto.classList.add('presupuesto');
-    
-    cruz.addEventListener('click', eliminarPresupuestoNuevo)
+
     contenedorForm.reset()
+
+    cruz.addEventListener('click', (e) =>{
+
+        liPresupuesto.classList.add('traslado-presupuesto')
+        setTimeout(() => {
+            presupuestoActual.removeChild(liPresupuesto)
+            const presupuestoId = e.target.getAttribute('id');
+            presupuestos = presupuestos.filter(presup => presup.id !== parseInt(presupuestoId))
+            localStorage.setItem('presupuestos', JSON.stringify(presupuestos))    
+        }, 500);
+
+    })
 }   
 
-    // eliminar presupuestos
-
-
-
-
+//EFECTO DE SMOOTH AL CLICKEAR Y QUE TRASLADE A OTRA SECC
 function trasladarSeccion (e){
     e.preventDefault()
 
     const href = this.getAttribute("href");
-    
     const offsetTop = document.querySelector(href).offsetTop;
 
     scroll({
         top: offsetTop,
         behavior: "smooth"
     })
-}
-
-
-function eliminarPresupuestoViejo (e) {
-
-    if(e.target.classList.contains('cruz')){
-        const presupuestoId = e.target.getAttribute('id');
-        const listaPresupuestos = document.querySelector('.lista-cotizaciones-anteriores');
-        console.log(document.querySelector('.presupuesto').id)
-        presupuestos = presupuestos.filter( presup => presup.id !== parseInt(presupuestoId));
-        localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
-
-        listaPresupuestos.removeChild(document.querySelector('presupuesto'))
-
-    }
-}
-
-function eliminarPresupuestoNuevo (e) {
-
-    
-    if(e.target.classList.contains('cruz')){
-    
-        const presupuestoId = e.target.getAttribute('id');
-
-
-        presupuestos = presupuestos.filter( presup => presup.id !== parseInt(presupuestoId));
-
-        localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
-
-
-    
-
-    }
 }
