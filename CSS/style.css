@@ -262,7 +262,10 @@ form .name {
     text-align: center;
     background-color: rgba(135, 135, 135, 0.096);
     width: 100%;
+
 }
+
+
 
 .presupuesto p {
     margin: 5px;
@@ -287,6 +290,7 @@ form .name {
     font-weight: 300;
     margin-top: 25px;
     height: 50px;
+    margin-bottom: 25px;
 }
 
 .lista-cotizaciones-anteriores {
@@ -304,9 +308,22 @@ form .name {
     border-radius: 5px;
 }
 
+.cotizacion-actual{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    flex-direction: column;
+}
+
+.cotizacion-actual li{
+    margin-top: 20px;
+
+}
+
 .cruz{
-    background-color: rgba(255, 0, 0, 0.605);
-    border-radius: 5px;
+    border: .5px solid rgba(0, 0, 0, 0.635);
+    background-color: #e61c1c;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -319,6 +336,12 @@ form .name {
     box-shadow: 2px 3px 4px 0px rgba(0,0,0,0.75);
     -webkit-box-shadow: 2px 3px 4px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 2px 3px 4px 0px rgba(0,0,0,0.75);
+}
+
+.cruz :active{
+    -webkit-box-shadow: inset 0px -2px 45px 11px rgba(0,0,0,0.52);
+    -moz-box-shadow: inset 0px -2px 45px 11px rgba(0,0,0,0.52);
+    box-shadow: inset 0px -2px 45px 11px rgba(0,0,0,0.52);
 }
 
 /* SPINNER */
@@ -460,6 +483,10 @@ form .name {
     .contenedor-cotizador{
         flex-direction: column;
     }
+    .cotizacion-actual{
+        margin: 0px;
+        width: 50vw;
+    }
     #cotizador{
         height: 80vh;
         width: 100vw;
@@ -474,6 +501,7 @@ form .name {
     .contenedor-cotizaciones{
         width: 100vw;
     }
+
     #cotizador{
         height: 80vh;
         width: 80vw;

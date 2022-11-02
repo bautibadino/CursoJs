@@ -10,6 +10,7 @@ const contenedorForm = document.querySelector('#cotizador');
 const boton = document.querySelector('.textos a')
 
 
+
 let precio;
 const base = 5000;
 let marca;
@@ -22,13 +23,12 @@ let presupuestoObj = {}
 //EVENTLISTENERS
 eventListeners()
 function eventListeners() {
-    // const botonCruz = document.querySelector('.cruz');
-    const formulario = document.querySelector('#cotizador')
-    const botonCruz = document.getElementsByClassName('cruz')
-    formulario.addEventListener('submit', verificar)
-    formulario.addEventListener('submit', cotizacionSeguro)
+
+    // cruzBoton.addEventListener('click', eliminarPresupuesto);
+    contenedorForm.addEventListener('submit', verificar)
+    contenedorForm.addEventListener('submit', cotizacionSeguro)
         // eliminar presupuestos
-    // botonCruz.addEventListener('click', eliminarPresupuesto);
+
 
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -90,6 +90,8 @@ function cotizacionesAnteriores(e) {
     if (presupuestos.length > 0) {
         presupuestos.forEach(element => {
             const liPresupuesto = document.createElement('li')
+            //le pasamos el id al html
+
 
             liPresupuesto.innerHTML = `
 
@@ -105,11 +107,15 @@ function cotizacionesAnteriores(e) {
     cruz.innerText = 'X';
     cruz.classList.add('cruz')
     liPresupuesto.appendChild(cruz)
+    cruz.addEventListener('click', eliminarPresupuestoViejo)
+    
+    const idNuevo = element.id;
+    cruz.setAttribute('id', idNuevo )
+
             listaPresupuestos.appendChild(liPresupuesto);
             liPresupuesto.classList.add('presupuesto');
         })
 
-        
 
     }
 }
@@ -335,14 +341,19 @@ function crearHTML() {
         cruz.innerText = 'X';
         cruz.classList.add('cruz')
         liPresupuesto.append(cruz)
-    presupuestoActual.appendChild(liPresupuesto);
-    liPresupuesto.classList.add('presupuesto');
+        
+        const idHtml = presupuestoObj.id
+        cruz.setAttribute('id', idHtml )
+
+        presupuestoActual.appendChild(liPresupuesto);
+        liPresupuesto.classList.add('presupuesto');
     
+    cruz.addEventListener('click', eliminarPresupuestoNuevo)
     contenedorForm.reset()
 }   
 
     // eliminar presupuestos
-const botonCruz = document.querySelector('.cruz');
+
 
 
 
@@ -359,8 +370,35 @@ function trasladarSeccion (e){
     })
 }
 
-function eliminarPresupuesto (e) {
-    e.preventDefault();
+
+function eliminarPresupuestoViejo (e) {
+
+    if(e.target.classList.contains('cruz')){
+        const presupuestoId = e.target.getAttribute('id');
+        const listaPresupuestos = document.querySelector('.lista-cotizaciones-anteriores');
+        console.log(document.querySelector('.presupuesto').id)
+        presupuestos = presupuestos.filter( presup => presup.id !== parseInt(presupuestoId));
+        localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
+
+        listaPresupuestos.removeChild(document.querySelector('presupuesto'))
+
+    }
+}
+
+function eliminarPresupuestoNuevo (e) {
+
     
-    console.log('desde eliminar')
+    if(e.target.classList.contains('cruz')){
+    
+        const presupuestoId = e.target.getAttribute('id');
+
+
+        presupuestos = presupuestos.filter( presup => presup.id !== parseInt(presupuestoId));
+
+        localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
+
+
+    
+
+    }
 }
