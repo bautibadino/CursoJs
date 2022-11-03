@@ -501,6 +501,9 @@ form .name {
         /* margin: 10px 0px; */
         width: 90%;
     }
+    .cotizacion-actual{
+        width: 100vw;
+    }
 }
 @media screen and (max-width: 600px){
     #submit{

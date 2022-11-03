@@ -23,10 +23,10 @@ function eventListeners() {
 
     contenedorForm.addEventListener('submit', verificar)
     contenedorForm.addEventListener('submit', cotizacionSeguro)
-    
     document.addEventListener('DOMContentLoaded', () => {
         cotizacionesAnteriores()
         ui.llenarOpciones();
+        obtenerDatos()
     })
     boton.addEventListener('click', trasladarSeccion);
 }
@@ -49,6 +49,34 @@ UI.prototype.llenarOpciones = () => {
         selectYear.appendChild(option)
     }
 }
+
+function obtenerDatos(e) {
+
+    fetch('./data/marcas.json')
+        .then(respuesta => respuesta.json())
+        .then(resultado => mostrarHTML(resultado));
+
+}
+
+function mostrarHTML(marcas, index) {
+    const opcionesMarcas = document.querySelector('#marca optgroup')
+
+    let html = '';
+
+    
+    marcas.forEach((marca, index)=> {
+        let i;
+
+        console.log(index);
+        html += `
+                    <option value="${index}" class="options">${marca}</option>
+                `
+    });
+
+    opcionesMarcas.innerHTML = html
+
+}
+
 
 const ui = new UI();
 
@@ -88,27 +116,27 @@ function cotizacionesAnteriores(e) {
     <p><span>Total:</span> ${element.total}</p>
     `
 
-    const cruz = document.createElement('button')
-    cruz.innerText = 'X';
-    cruz.classList.add('cruz')
-    liPresupuesto.appendChild(cruz)
-    const idNuevo = element.id;
-    cruz.setAttribute('id', idNuevo )
+            const cruz = document.createElement('button')
+            cruz.innerText = 'X';
+            cruz.classList.add('cruz')
+            liPresupuesto.appendChild(cruz)
+            const idNuevo = element.id;
+            cruz.setAttribute('id', idNuevo)
 
-    listaPresupuestos.appendChild(liPresupuesto);
-    liPresupuesto.classList.add('presupuesto');
+            listaPresupuestos.appendChild(liPresupuesto);
+            liPresupuesto.classList.add('presupuesto');
 
-    //BORRAR COTIZACIONES ANTERIORES
-    cruz.addEventListener('click', (e) =>{
-        liPresupuesto.classList.add('traslado-presupuesto')
-        setTimeout(() => {
-            listaPresupuestos.removeChild(liPresupuesto)
-            const presupuestoId = e.target.getAttribute('id');
-            presupuestos = presupuestos.filter(presup => presup.id !== parseInt(presupuestoId))
-            localStorage.setItem('presupuestos', JSON.stringify(presupuestos))    
-        }, 500);
+            //BORRAR COTIZACIONES ANTERIORES
+            cruz.addEventListener('click', (e) => {
+                liPresupuesto.classList.add('traslado-presupuesto')
+                setTimeout(() => {
+                    listaPresupuestos.removeChild(liPresupuesto)
+                    const presupuestoId = e.target.getAttribute('id');
+                    presupuestos = presupuestos.filter(presup => presup.id !== parseInt(presupuestoId))
+                    localStorage.setItem('presupuestos', JSON.stringify(presupuestos))
+                }, 500);
 
-    })
+            })
         })
 
 
@@ -119,8 +147,8 @@ function cotizacionesAnteriores(e) {
 
 
 function cotizacionSeguro(e) {
-// USAREMOS UN SWITCH PARA ESTABLECER EL NOMBRE DE LA MARCA DE ACUERDO AL VALUE DEL HTML,
-// ADEMAS USAREMOS UN PRECIO BASE QUE DE ACUERDO A LA MARCA SE MULTIPLICARÁ.
+    // USAREMOS UN SWITCH PARA ESTABLECER EL NOMBRE DE LA MARCA DE ACUERDO AL VALUE DEL HTML,
+    // ADEMAS USAREMOS UN PRECIO BASE QUE DE ACUERDO A LA MARCA SE MULTIPLICARÁ.
 
     switch (selectModel.value) {
         case '1':
@@ -240,9 +268,9 @@ function cotizacionSeguro(e) {
     }
 
     //ESTABLECEMOS QUE SOLO CUANDO SE VERFIQUE TODO SE GUARDE EN STOREGE
-    if(marca === undefined || tipoPoliza === undefined || precio === undefined || nombreSeguro.value === '' || nombreSeguro.value === Number ){
+    if (marca === undefined || tipoPoliza === undefined || precio === undefined || nombreSeguro.value === '' || nombreSeguro.value === Number) {
     }
-    else{
+    else {
         guardarStorage()
     }
 
@@ -283,8 +311,8 @@ function crearAlerta(mensaje, tipo) {
     if (tipo === 'error') {
         divAlerta.classList.add('divAlerta-error')
         setTimeout(() => {
-        divAlerta.classList.add('traslado-alerta')
-        
+            divAlerta.classList.add('traslado-alerta')
+
             setTimeout(() => {
                 divAlerta.remove()
             }, 1000);
@@ -295,19 +323,19 @@ function crearAlerta(mensaje, tipo) {
         const spinner = document.querySelector('.lds-roller')
         spinner.style.visibility = 'visible';
         //UNA VEZ QUE SE PASA LA VERIFICACION PASAMOS A ARMAR EL PRESUPUESTO
-        
+
         setTimeout(() => {
             divAlerta.classList.add('traslado-alerta')
 
-                setTimeout(() => {
-                    divAlerta.remove()
-                    parrafoAlerta.remove()
+            setTimeout(() => {
+                divAlerta.remove()
+                parrafoAlerta.remove()
 
 
-                }, 1000);
-                crearHTML()
-                spinner.style.visibility = 'hidden';
-            }, 4000);
+            }, 1000);
+            crearHTML()
+            spinner.style.visibility = 'hidden';
+        }, 4000);
     }
 
 
@@ -328,34 +356,34 @@ function crearHTML() {
     <p><span>Total:</span> ${presupuestoObj.total}</p>
         `
 
-        const cruz = document.createElement('button')
-        cruz.innerText = 'X';
-        cruz.classList.add('cruz')
-        liPresupuesto.append(cruz)
-        
-        const idHtml = presupuestoObj.id
-        cruz.setAttribute('id', idHtml )
+    const cruz = document.createElement('button')
+    cruz.innerText = 'X';
+    cruz.classList.add('cruz')
+    liPresupuesto.append(cruz)
 
-        presupuestoActual.appendChild(liPresupuesto);
-        liPresupuesto.classList.add('presupuesto');
+    const idHtml = presupuestoObj.id
+    cruz.setAttribute('id', idHtml)
+
+    presupuestoActual.appendChild(liPresupuesto);
+    liPresupuesto.classList.add('presupuesto');
 
     contenedorForm.reset()
 
-    cruz.addEventListener('click', (e) =>{
+    cruz.addEventListener('click', (e) => {
 
         liPresupuesto.classList.add('traslado-presupuesto')
         setTimeout(() => {
             presupuestoActual.removeChild(liPresupuesto)
             const presupuestoId = e.target.getAttribute('id');
             presupuestos = presupuestos.filter(presup => presup.id !== parseInt(presupuestoId))
-            localStorage.setItem('presupuestos', JSON.stringify(presupuestos))    
+            localStorage.setItem('presupuestos', JSON.stringify(presupuestos))
         }, 500);
 
     })
-}   
+}
 
 //EFECTO DE SMOOTH AL CLICKEAR Y QUE TRASLADE A OTRA SECC
-function trasladarSeccion (e){
+function trasladarSeccion(e) {
     e.preventDefault()
 
     const href = this.getAttribute("href");
