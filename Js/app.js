@@ -60,10 +60,9 @@ function obtenerDatos(e) {
 
 function mostrarHTML(marcas, index) {
     const opcionesMarcas = document.querySelector('#marca optgroup')
-
     let html = '';
 
-    
+    // ITERAMOS SOBRE LAS MARCAS QUE TRAEMOS DEL FETCH Y A CADA MARCA LE PASAMOS SU NUMERO DE INDEX COMO VALUE PARA LUEGO USARLA EN LA COTIZACION.
     marcas.forEach((marca, index)=> {
         let i;
 
@@ -315,7 +314,7 @@ function crearAlerta(mensaje, tipo) {
 
             setTimeout(() => {
                 divAlerta.remove()
-            }, 1000);
+            }, 400);
         }, 4000);
 
     } else {
@@ -332,7 +331,7 @@ function crearAlerta(mensaje, tipo) {
                 parrafoAlerta.remove()
 
 
-            }, 1000);
+            }, 400);
             crearHTML()
             spinner.style.visibility = 'hidden';
         }, 4000);
